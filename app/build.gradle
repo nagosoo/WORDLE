@@ -3,9 +3,6 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
-def Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
 android {
 
     compileSdk 31
@@ -24,13 +21,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "baseURL", properties.getProperty("url.base"))
-            buildConfigField("String", "apiKey", properties.getProperty("api.key"))
         }
-        debug {
-            buildConfigField("String", "baseURL", properties.getProperty("url.base"))
-            buildConfigField("String", "apiKey", properties.getProperty("api.key"))
-        }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -50,18 +42,4 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-
-    //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    //okhttp
-    implementation("com.squareup.okhttp3:okhttp:4.9.3")
-    //okhttp logging interceptor
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
-    //xml parser
-    implementation 'com.tickaroo.tikxml:annotation:0.8.13'
-    implementation 'com.tickaroo.tikxml:core:0.8.13'
-    implementation 'com.tickaroo.tikxml:retrofit-converter:0.8.13'
-    annotationProcessor 'com.tickaroo.tikxml:processor:0.8.13'
-    //coroutine
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
 }
