@@ -13,46 +13,42 @@ import com.example.wordle.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var order = 0
     private lateinit var binding: ActivityMainBinding
+    private var isLastLetter = false
     private val sampleWord = arrayOf("ㄱ", "ㅜ", "ㅁ", "ㅓ", "ㅇ")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setClickListener()
     }
 
-    override fun onClick(keyboard: View?) {
-        val delete = binding.keyboard.delete.id
-        val enter = binding.keyboard.enter.id
-
-        //마지막 자모 일 때 엔터를 누르기 전까지 order을 +하지 않는다.
-        if (order % 5 == 4) {
-            (binding.gridLayout.gridLayout[order] as TextView).text =
-                (keyboard as AppCompatButton).text
-            binding.keyboard.enter.setOnClickListener {
+    private fun setClickListener() {
+        binding.keyboard.enter.setOnClickListener {
+            if (order % 5 == 0) {
                 checkAnswer()
-                order += 1
-            }
-            return@onClick
+            } else {Toast.makeText(this,"덜입력",Toast.LENGTH_SHORT).show()}
         }
 
         binding.keyboard.delete.setOnClickListener {
-            if (order % 5 != 0) {
-                (binding.gridLayout.gridLayout[order] as TextView).text = ""
+            if (isLastLetter || order % 5 != 0) {
                 order -= 1
-            } else {
-                (binding.gridLayout.gridLayout[order] as TextView).text =
-                    "" //첫 자모 일 때는 delete 눌러도 order - 하지 않는다.
+                (binding.gridLayout.gridLayout[order] as TextView).text = ""
+                if (order % 5 == 0) isLastLetter = false
             }
         }
+    }
 
-        if (keyboard?.id != delete && keyboard?.id != enter && order in 0..24) {
+    override fun onClick(keyboard: View?) {
+        if (order in 0..24) {
             (binding.gridLayout.gridLayout[order] as TextView).text =
                 (keyboard as AppCompatButton).text
             order += 1
+            if (order % 5 == 0) isLastLetter = true
         }
     }
 
     private fun checkAnswer() {
+        Toast.makeText(this, "entered ${order}", Toast.LENGTH_SHORT).show()
         //정답이 맞는지 체크한다.
         val first = (binding.gridLayout.gridLayout[order - 4] as TextView).text
         val second = (binding.gridLayout.gridLayout[order - 3] as TextView).text
@@ -66,7 +62,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             Toast.makeText(this, "다맞음", Toast.LENGTH_SHORT).show()
             return@checkAnswer
         }
-
     }
 
     private fun checkAllCorrect(answerArray: Array<CharSequence>): Boolean {
