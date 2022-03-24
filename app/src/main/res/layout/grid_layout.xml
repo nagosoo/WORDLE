@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gridLayout"
+    android:layout_width="match_parent"
+    android:layout_height="450dp"
+    android:layout_marginBottom="50dp"
+    android:columnCount="5"
+    android:rowCount="6"
+    android:useDefaultMargins="true">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/firstFirst"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="1" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/firstSecond"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="2" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/firstThird"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="3" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/firstFourth"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="4" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/firstFifth"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="5" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/secondFirst"
+
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="6" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/secondSecond"
+
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="7" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/secondThird"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="8" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/secondFourth"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="9" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/secondFifth"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="10" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/thirdFirst"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="11" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/thirdSecond"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="12" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/thirdThird"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="13" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/thirdFourth"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="14" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/thirdFifth"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="15" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fourthFirst"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="16" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fourthSecond"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="17" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fourthThird"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="18" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fourthFourth"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="19" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fourthFifth"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="20" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fifthFirst"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="21" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fifthSecond"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="22" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fifthThird"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="23" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fifthFourth"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="24" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fifthFifth"
+        style="@style/default_textView"
+        android:layout_width="0dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_margin="3dp"
+        android:background="@color/default_gray"
+        android:clickable="true"
+        android:tag="25" />
+
+</GridLayout>
