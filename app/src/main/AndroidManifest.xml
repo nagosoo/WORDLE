@@ -3,6 +3,8 @@
     package="com.example.wordle">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-feature android:name="android.hardware.screen.portrait"/>
+    <!--특정 방향만을 지원할 때 구글플레이에서 필터링함.-->
 
     <application
         android:name=".MyApplication"
@@ -13,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Wordle">
         <activity
+            android:screenOrientation="portrait"
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

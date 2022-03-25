@@ -30,8 +30,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setClickListener() {
         binding.keyboard.enter.setOnClickListener {
-            if (order % 5 == 0) {
+            if (isLastLetter) {
                 checkAnswer()
+                isLastLetter = false
             } else {
                 Toast.makeText(this, "덜입력", Toast.LENGTH_SHORT).show()
             }
@@ -39,14 +40,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.keyboard.delete.setOnClickListener {
             if (isLastLetter || order % 5 != 0) {
+                if (order % 5 == 0) isLastLetter = false
                 order -= 1
                 (binding.gridLayout.gridLayout[order] as TextView).text = ""
-                if (order % 5 == 0) isLastLetter = false
             }
         }
     }
 
     override fun onClick(keyboard: View?) {
+        if (isLastLetter) return
         if (order in 0..24) {
             (binding.gridLayout.gridLayout[order] as TextView).text =
                 (keyboard as AppCompatButton).text
@@ -82,13 +84,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         for (i in 0..4) {
             if (answerArray[i] == sampleWord[i]) {
                 setGridViewColor(i, green)
-                setKeyboardColor(i,green)
+                setKeyboardColor(i, green)
             } else if (answerArray[i] != sampleWord[i] && checkContainLetter(answerArray[i])) {
                 setGridViewColor(i, orange)
-                setKeyboardColor(i,orange)
+                setKeyboardColor(i, orange)
             } else {
                 setGridViewColor(i, gray)
-                setKeyboardColor(i,gray)
+                setKeyboardColor(i, gray)
             }
         }
     }
@@ -103,7 +105,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setKeyboardColor(i: Int, color: Int) {
         val uniCode = (binding.gridLayout.gridLayout[i + (order - 5)] as TextView).text[0].code
-        val keyboard =  binding.keyboard.tableLayout.findViewWithTag<AppCompatButton>("$uniCode")
+        val keyboard = binding.keyboard.tableLayout.findViewWithTag<AppCompatButton>("$uniCode")
         keyboard.setBackgroundColor(color)
     }
 
