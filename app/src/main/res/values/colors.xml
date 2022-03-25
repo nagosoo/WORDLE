@@ -10,4 +10,8 @@
 
     <color name="default_gray">#818384</color>
     <color name="keyboard_gray">#dfe1e7</color>
+    <color name="correct_green">#5ec169</color>
+    <color name="semi_correct_orange">#e2b43f</color>
+    <color name="incorrect_gray">#909bad</color>
+
 </resources>
