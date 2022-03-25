@@ -1,7 +1,9 @@
 package com.example.wordle
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsets
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -24,15 +26,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        hideBottomNav()
         setClickListener()
 
+    }
+
+    private fun hideBottomNav() {
+        if (Build.VERSION.SDK_INT < 30) {
+            val UI_OPTIONS =
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            window.decorView.systemUiVisibility = UI_OPTIONS
+        } else {
+            window.decorView.windowInsetsController!!.hide(WindowInsets.Type.statusBars())
+        }
     }
 
     private fun setClickListener() {
         binding.keyboard.enter.setOnClickListener {
             if (isLastLetter) {
                 checkAnswer()
-                isLastLetter = false
             } else {
                 Toast.makeText(this, "덜입력", Toast.LENGTH_SHORT).show()
             }
@@ -40,7 +52,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.keyboard.delete.setOnClickListener {
             if (isLastLetter || order % 5 != 0) {
-                if (order % 5 == 0) isLastLetter = false
+//                if (order % 5 == 0) isLastLetter = false
+                if (isLastLetter) isLastLetter = false
                 order -= 1
                 (binding.gridLayout.gridLayout[order] as TextView).text = ""
             }
@@ -58,6 +71,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun checkAnswer() {
+        isLastLetter = false
+
         val first = (binding.gridLayout.gridLayout[order - 5] as TextView).text
         val second = (binding.gridLayout.gridLayout[order - 4] as TextView).text
         val third = (binding.gridLayout.gridLayout[order - 3] as TextView).text
