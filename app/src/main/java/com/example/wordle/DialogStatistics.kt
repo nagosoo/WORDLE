@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import com.example.wordle.databinding.DialogStatisticsBinding
-import splitties.dimensions.dip
 import kotlin.math.roundToInt
 
 class DialogStatistics(
@@ -24,9 +23,8 @@ class DialogStatistics(
         binding.viewOne.post {
             matchParentWidth = binding.viewOne.width //height is ready
             setData()
-            setOnClickListener()
         }
-
+        setOnClickListener()
         if (answer.isNullOrEmpty().not()) setAnswer(answer)
     }
 
@@ -59,17 +57,17 @@ class DialogStatistics(
         val maxMap = getMaxSuccess()
         val maxValue = maxMap.values.map { it }[0]
         binding.viewOne.layoutParams.width =
-            context.dip(matchParentWidth * getSuccessNumAt(1) / maxValue)
+            matchParentWidth * getSuccessNumAt(1) / maxValue
         binding.viewTwo.layoutParams.width =
-            context.dip(matchParentWidth * getSuccessNumAt(2) / maxValue)
+            matchParentWidth * getSuccessNumAt(2) / maxValue
         binding.viewThree.layoutParams.width =
-            context.dip(matchParentWidth * getSuccessNumAt(3) / maxValue)
+            matchParentWidth * getSuccessNumAt(3) / maxValue
         binding.viewFour.layoutParams.width =
-            context.dip(matchParentWidth * getSuccessNumAt(4) / maxValue)
+            matchParentWidth * getSuccessNumAt(4) / maxValue
         binding.viewFive.layoutParams.width =
-            context.dip(matchParentWidth * getSuccessNumAt(5) / maxValue)
+            matchParentWidth * getSuccessNumAt(5) / maxValue
         binding.viewSix.layoutParams.width =
-            context.dip(matchParentWidth * getSuccessNumAt(6) / maxValue)
+            matchParentWidth * getSuccessNumAt(6) / maxValue
     }
 
     private fun setAnswer(answer: String? = null) {
@@ -78,6 +76,7 @@ class DialogStatistics(
 
     private fun setOnClickListener() {
         binding.buttonPositive.setOnClickListener {
+            dismiss()
             positiveButtonClickListener()
         }
         binding.buttonNegative.setOnClickListener {

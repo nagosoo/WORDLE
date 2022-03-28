@@ -141,7 +141,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setOnPositiveButtonClickListener() {
         finish()
-        startActivity(this.intent)
+        startActivity(intent)
     }
 
     private fun setSuccessPreference(successAtRow: Int) {
