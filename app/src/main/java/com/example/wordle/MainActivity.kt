@@ -1,5 +1,6 @@
 package com.example.wordle
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -15,6 +16,7 @@ import com.example.wordle.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var order = 0
+    private val sp by lazy { this?.getPreferences(Context.MODE_PRIVATE) }
     private lateinit var binding: ActivityMainBinding
     private var isLastLetter = false
     private val orange by lazy { ContextCompat.getColor(this, R.color.semi_correct_orange) }
@@ -33,9 +35,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun hideBottomNav() {
         if (Build.VERSION.SDK_INT < 30) {
-            val UI_OPTIONS =
+            val uiOptions =
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-            window.decorView.systemUiVisibility = UI_OPTIONS
+            window.decorView.systemUiVisibility = uiOptions
         } else {
             window.decorView.windowInsetsController!!.hide(WindowInsets.Type.statusBars())
         }
@@ -52,7 +54,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.keyboard.delete.setOnClickListener {
             if (isLastLetter || order % 5 != 0) {
-//                if (order % 5 == 0) isLastLetter = false
                 if (isLastLetter) isLastLetter = false
                 order -= 1
                 (binding.gridLayout.gridLayout[order] as TextView).text = ""
@@ -86,6 +87,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 binding.gridLayout.gridLayout[order - i].setBackgroundColor(green)
             }
             Toast.makeText(this, "다맞음", Toast.LENGTH_SHORT).show()
+
+            setPreference(order / 5)
+            showStatisticsDialog()
             return
         }
         checkSemiCorrect(answerArray)
@@ -122,6 +126,36 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val uniCode = (binding.gridLayout.gridLayout[i + (order - 5)] as TextView).text[0].code
         val keyboard = binding.keyboard.tableLayout.findViewWithTag<AppCompatButton>("$uniCode")
         keyboard.setBackgroundColor(color)
+    }
+
+    private fun showStatisticsDialog() {
+       DialogStatistics.Builder(this, sp).build().show()
+    }
+
+    private fun setPreference(successAtRow: Int) {
+        val totalTry = sp.getInt("totalTry", 0)
+        val key = "successAt$successAtRow"
+        val successAtRowNum = sp.getInt(key, 0)
+        val totalSuccessNum = getTotalSuccessNum() + 1
+        with(sp.edit()) {
+            //총시도
+            this.putInt("totalTry", totalTry + 1)
+            //성공률 - 그냥 내림시킴
+            this.putInt("successPercentage", totalSuccessNum / (totalTry + 1) * 100)
+            //연속
+            //연속
+            //몇번째에?
+            this.putInt("successAt$successAtRow", successAtRowNum + 1)
+            apply()
+        }
+    }
+
+    private fun getTotalSuccessNum(): Int {
+        var totalSuccessNum = 0
+        for (i in 1..6) {
+            totalSuccessNum += sp.getInt("successAt$i", 0)
+        }
+        return totalSuccessNum
     }
 
 }
