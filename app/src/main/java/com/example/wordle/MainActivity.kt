@@ -16,7 +16,7 @@ import com.example.wordle.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var order = 0
-    private val sp by lazy { this?.getPreferences(Context.MODE_PRIVATE) }
+    private val sp by lazy { this.getPreferences(Context.MODE_PRIVATE) }
     private lateinit var binding: ActivityMainBinding
     private var isLastLetter = false
     private val orange by lazy { ContextCompat.getColor(this, R.color.semi_correct_orange) }
@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.keyboard.enter.setOnClickListener {
             if (isLastLetter) {
                 checkAnswer()
-            } else {
-                Toast.makeText(this, "덜입력", Toast.LENGTH_SHORT).show()
+            } else if (order in 0..24) {
+                Toast.makeText(this, "글자 수를 덜 입력했습니다.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -86,13 +86,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             for (i in 1..5) {
                 binding.gridLayout.gridLayout[order - i].setBackgroundColor(green)
             }
-            Toast.makeText(this, "다맞음", Toast.LENGTH_SHORT).show()
-
-            setPreference(order / 5)
+            setSuccessPreference(order / 5)
             showStatisticsDialog()
             return
         }
         checkSemiCorrect(answerArray)
+
+        //마지막까지 못 맞췄을 경우
+        if (order == 25) {
+            setFailPreference()
+            val answer = sampleWord.joinToString()
+            showStatisticsDialog(answer)
+        }
     }
 
     private fun checkAllCorrect(answerArray: Array<CharSequence>): Boolean {
@@ -128,34 +133,51 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         keyboard.setBackgroundColor(color)
     }
 
-    private fun showStatisticsDialog() {
-       DialogStatistics.Builder(this, sp).build().show()
+    private fun showStatisticsDialog(answer: String? = null) {
+        order = -1
+        DialogStatistics.Builder(this, sp, ::setOnPositiveButtonClickListener, answer).build()
+            .show()
     }
 
-    private fun setPreference(successAtRow: Int) {
+    private fun setOnPositiveButtonClickListener() {
+        finish()
+        startActivity(this.intent)
+    }
+
+    private fun setSuccessPreference(successAtRow: Int) {
         val totalTry = sp.getInt("totalTry", 0)
         val key = "successAt$successAtRow"
         val successAtRowNum = sp.getInt(key, 0)
-        val totalSuccessNum = getTotalSuccessNum() + 1
+        val successiveSuccessNum = sp.getInt("successiveSuccess", 0)
+
         with(sp.edit()) {
             //총시도
             this.putInt("totalTry", totalTry + 1)
-            //성공률 - 그냥 내림시킴
-            this.putInt("successPercentage", totalSuccessNum / (totalTry + 1) * 100)
-            //연속
-            //연속
+            //현재 연속 성공
+            this.putInt("successiveSuccess", successiveSuccessNum + 1)
             //몇번째에?
             this.putInt("successAt$successAtRow", successAtRowNum + 1)
             apply()
         }
     }
 
-    private fun getTotalSuccessNum(): Int {
-        var totalSuccessNum = 0
-        for (i in 1..6) {
-            totalSuccessNum += sp.getInt("successAt$i", 0)
-        }
-        return totalSuccessNum
-    }
+    private fun setFailPreference() {
+        val totalTry = sp.getInt("totalTry", 0)
+        val successiveSuccessNum = sp.getInt("successiveSuccess", 0)
+        val successiveSuccessArray = sp.getStringSet("successiveSuccessArray", setOf<String>())
 
+        with(sp.edit()) {
+            this.putInt("totalTry", totalTry + 1)
+            this.putInt("successiveSuccess", 0) //현재 연속 성공 Reset
+
+            successiveSuccessArray.isNullOrEmpty().not().let {
+                val set = if (it) {
+                    successiveSuccessArray!!.add(successiveSuccessNum.toString())
+                    successiveSuccessArray.toSet()
+                } else setOf(successiveSuccessNum.toString())
+                this.putStringSet("successiveSuccessArray", set)
+            }
+            apply()
+        }
+    }
 }

@@ -6,8 +6,14 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import com.example.wordle.databinding.DialogStatisticsBinding
 import splitties.dimensions.dip
+import kotlin.math.roundToInt
 
-class DialogStatistics(context: Context, val sp: SharedPreferences) : AlertDialog(context) {
+class DialogStatistics(
+    context: Context,
+    private val sp: SharedPreferences,
+    private val positiveButtonClickListener: () -> (Unit),
+    private val answer: String? = null
+) : AlertDialog(context) {
     private val inflater = LayoutInflater.from(context)
     private val binding = DialogStatisticsBinding.inflate(inflater)
     var matchParentWidth = 0
@@ -18,14 +24,30 @@ class DialogStatistics(context: Context, val sp: SharedPreferences) : AlertDialo
         binding.viewOne.post {
             matchParentWidth = binding.viewOne.width //height is ready
             setData()
+            setOnClickListener()
         }
+
+        if (answer.isNullOrEmpty().not()) setAnswer(answer)
     }
 
     private fun setData() {
         val totalTry = sp.getInt("totalTry", 0)
+        val successiveSuccess = sp.getInt("successiveSuccess", 0)
 
         binding.tvTotalTry.text = totalTry.toString()
-        binding.tvPercentage.text = "${(getSuccessNumSum() / totalTry * 100)}%"
+        val decimal = getSuccessNumSum() / totalTry.toDouble()
+        val quotient = (decimal * 100).roundToInt()
+        binding.tvPercentage.text = "$quotient%"
+        binding.tvCurrentSuccessive.text = successiveSuccess.toString()
+        val set = sp.getStringSet("successiveSuccessArray", setOf())
+        set.isNullOrEmpty().not().let {
+            val max = if (it) {
+                val maxSS = set!!.map { it.toInt() }.maxOf { it }
+                maxOf(maxSS, successiveSuccess)
+            } else successiveSuccess
+
+            binding.tvMaxSuccessive.text = max.toString()
+        }
 
         binding.tvOne.text = getSuccessNumAt(1).toString()
         binding.tvTwo.text = getSuccessNumAt(2).toString()
@@ -50,6 +72,19 @@ class DialogStatistics(context: Context, val sp: SharedPreferences) : AlertDialo
             context.dip(matchParentWidth * getSuccessNumAt(6) / maxValue)
     }
 
+    private fun setAnswer(answer: String? = null) {
+        binding.tvAnswer.text = "정답은 '$answer' 이었습니다."
+    }
+
+    private fun setOnClickListener() {
+        binding.buttonPositive.setOnClickListener {
+            positiveButtonClickListener()
+        }
+        binding.buttonNegative.setOnClickListener {
+            dismiss()
+        }
+    }
+
     private fun getSuccessNumSum(): Int {
         var totalSuccessNum = 0
         for (i in 1..6) {
@@ -71,9 +106,14 @@ class DialogStatistics(context: Context, val sp: SharedPreferences) : AlertDialo
         return mapOf(list.indexOf(max) + 1 to max)
     }
 
-    class Builder(private val context: Context, private val sp: SharedPreferences) {
+    class Builder(
+        private val context: Context,
+        private val sp: SharedPreferences,
+        private val positiveButtonClickListener: () -> (Unit),
+        private var answer: String? = null
+    ) {
         fun build(): DialogStatistics {
-            return DialogStatistics(context, sp)
+            return DialogStatistics(context, sp, positiveButtonClickListener, answer)
         }
     }
 
