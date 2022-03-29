@@ -3,8 +3,8 @@
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/gridLayout"
     android:layout_width="match_parent"
-    android:layout_height="450dp"
-    android:layout_marginBottom="50dp"
+    android:layout_height="0dp"
+    android:layout_weight="5"
     android:columnCount="5"
     android:rowCount="6"
     android:useDefaultMargins="true">

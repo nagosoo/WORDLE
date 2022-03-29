@@ -15,7 +15,7 @@ class DialogStatistics(
 ) : AlertDialog(context) {
     private val inflater = LayoutInflater.from(context)
     private val binding = DialogStatisticsBinding.inflate(inflater)
-    var matchParentWidth = 0
+    private var matchParentWidth = 0
 
     init {
         setView(binding.root)
