@@ -2,7 +2,9 @@ package com.example.extractxls
 
 import android.content.res.AssetManager
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.extractxls.Util.Companion.LOG
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -21,15 +23,18 @@ class MainActivity : AppCompatActivity() {
             br.close()
 
             val map = getMap(list)
+            val iterator = map.iterator()
 
-            val a = map.asIterable()
-            a.forEach {
-                if (!Util().doSeparating(it.key)) {
-                    map.remove(it.key)
+            while (iterator.hasNext()){
+                if(!Util().doSeparating(iterator.next().key)){
+                    iterator.remove()
                 }
             }
 
-//            Util().doSeparating("꽴뛰")
+            map.forEach {
+                Log.d(LOG,"mapKey ${it.key}")
+            }
+
 
 
 
