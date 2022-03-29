@@ -59,6 +59,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 (binding.gridLayout.gridLayout[order] as TextView).text = ""
             }
         }
+        binding.imageManual.setOnClickListener {
+            DialogManual.Builder(this).build().show()
+        }
     }
 
     override fun onClick(keyboard: View?) {
