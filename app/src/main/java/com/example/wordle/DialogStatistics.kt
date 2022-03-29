@@ -56,18 +56,24 @@ class DialogStatistics(
 
         val maxMap = getMaxSuccess()
         val maxValue = maxMap.values.map { it }[0]
-        binding.viewOne.layoutParams.width =
-            matchParentWidth * getSuccessNumAt(1) / maxValue
-        binding.viewTwo.layoutParams.width =
-            matchParentWidth * getSuccessNumAt(2) / maxValue
-        binding.viewThree.layoutParams.width =
-            matchParentWidth * getSuccessNumAt(3) / maxValue
-        binding.viewFour.layoutParams.width =
-            matchParentWidth * getSuccessNumAt(4) / maxValue
-        binding.viewFive.layoutParams.width =
-            matchParentWidth * getSuccessNumAt(5) / maxValue
-        binding.viewSix.layoutParams.width =
-            matchParentWidth * getSuccessNumAt(6) / maxValue
+
+        if (maxValue == 0) {
+            binding.viewOne.layoutParams.width = 0
+            binding.viewTwo.layoutParams.width = 0
+            binding.viewThree.layoutParams.width = 0
+            binding.viewFour.layoutParams.width = 0
+            binding.viewFive.layoutParams.width = 0
+            binding.viewSix.layoutParams.width = 0
+        }
+        else {
+            binding.viewOne.layoutParams.width = matchParentWidth * getSuccessNumAt(1) / maxValue
+            binding.viewTwo.layoutParams.width = matchParentWidth * getSuccessNumAt(2) / maxValue
+            binding.viewThree.layoutParams.width = matchParentWidth * getSuccessNumAt(3) / maxValue
+            binding.viewFour.layoutParams.width = matchParentWidth * getSuccessNumAt(4) / maxValue
+            binding.viewFive.layoutParams.width = matchParentWidth * getSuccessNumAt(5) / maxValue
+            binding.viewSix.layoutParams.width = matchParentWidth * getSuccessNumAt(6) / maxValue
+        }
+
     }
 
     private fun setAnswer(answer: String? = null) {

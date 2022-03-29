@@ -4,12 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/bg_default_green.xml" value="0.2205" />
+        <entry key="app/src/main/res/drawable/bg_statistics.xml" value="0.3315" />
+        <entry key="app/src/main/res/drawable/drawable_replay.xml" value="0.16" />
         <entry key="app/src/main/res/drawable/ripple_default.xml" value="0.2205" />
         <entry key="app/src/main/res/drawable/selection_grid_answer.xml" value="0.2205" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/dialog_statistics.xml" value="0.18" />
         <entry key="app/src/main/res/layout/grid_layout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/jaeum_keyboard.xml" value="0.14" />
-        <entry key="app/src/main/res/layout/keyboard.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/keyboard.xml" value="0.1" />
         <entry key="app/src/main/res/layout/moeum_keyboard.xml" value="0.21666666666666667" />
       </map>
     </option>
