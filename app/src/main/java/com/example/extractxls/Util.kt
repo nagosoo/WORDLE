@@ -24,8 +24,8 @@ class Util {
                 //   Log.d(LOG, "${word[i]} => ${CHO[cho]} ${JOONG[joong]} ${JONG[jong]}")
             separatedWord += "${CHO[cho]} ${JOONG[joong]} ${JONG[jong]} "
             if(CHO[cho].length>=2)  return false //쌍자음 제외
-            else if(JOONG[joong].length>=2) return false //쌍자음 제외
-            else if(jong==3 || jong==7) return false //쌍모음 제외
+            else if(JONG[jong].length>=2) return false //이중받침 제외
+            else if(joong==3 || joong==7) return false //쌍모음 제외
         }
 
         return separatedWord.replace(" ", "").length == 5

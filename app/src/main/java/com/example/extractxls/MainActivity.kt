@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.extractxls.Util.Companion.LOG
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
+import java.io.*
 import java.nio.charset.Charset
 
 class MainActivity : AppCompatActivity() {
@@ -35,8 +33,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d(LOG,"mapKey ${it.key}")
             }
 
-
-
+            writeCSV(map)
 
         } catch (e: IOException) {
             e.printStackTrace();
@@ -51,6 +48,20 @@ class MainActivity : AppCompatActivity() {
         }
 
         return map
+    }
+
+    private fun writeCSV(map : Map<String,String>){
+        try {
+        val bw = BufferedWriter(FileWriter(File(filesDir.path+"/"+"food_1_filtered.csv"),true))
+        val iterator = map.iterator()
+        while (iterator.hasNext()){
+            bw.write("${iterator.next().key},${iterator.next().value}")
+            bw.newLine()
+        }
+        bw.close()}
+        catch (e:Exception){
+            Log.d(LOG,"${e.toString()}")
+        }
     }
 }
 
