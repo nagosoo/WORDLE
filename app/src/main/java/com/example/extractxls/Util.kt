@@ -1,7 +1,5 @@
 package com.example.extractxls
 
-import android.util.Log
-
 class Util {
     companion object{
        const val LOG = "LOGDATA"
@@ -21,11 +19,11 @@ class Util {
             val cho = uniVal / 588
             val joong = uniVal % 588 / 28
             val jong = uniVal % 28
-                //   Log.d(LOG, "${word[i]} => ${CHO[cho]} ${JOONG[joong]} ${JONG[jong]}")
+            //   Log.d(LOG, "${word[i]} => ${CHO[cho]} ${JOONG[joong]} ${JONG[jong]}")
             separatedWord += "${CHO[cho]} ${JOONG[joong]} ${JONG[jong]} "
-            if(CHO[cho].length>=2)  return false //쌍자음 제외
-            else if(JONG[jong].length>=2) return false //이중받침 제외
-            else if(joong==3 || joong==7) return false //쌍모음 제외
+            if (CHO[cho].length >= 2) return false //쌍자음 제외
+            else if (JONG[jong].length >= 2) return false //이중받침 제외
+            else if (joong == 3 || joong == 7) return false //쌍모음 제외
         }
 
         return separatedWord.replace(" ", "").length == 5
