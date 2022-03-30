@@ -6,7 +6,7 @@ import java.nio.charset.Charset
 
 fun main() {
     try {
-        val fileName = "food_3"
+        val fileName = "animal_plant_3"
 
         val br = BufferedReader(
             (InputStreamReader(
@@ -18,20 +18,23 @@ fun main() {
         val list = br.use(BufferedReader::readLines)
         br.close()
 
-        val map = getMap(list)
+        val map = getMap(list) // Key - value
         val iterator = map.iterator()
+        val finalMap = mutableMapOf<String, String>() //key 가 ㄱㅏㅁㅈㅏ 형식
 
         while (iterator.hasNext()) {
-            if (!Util().doSeparating(iterator.next().key)) {
-                iterator.remove()
+            val next = iterator.next()
+            val separatedWord = Util().doSeparating(next.key)
+            if (separatedWord.first) {
+                finalMap[separatedWord.second!!] = next.value
             }
         }
 
-        map.forEach {
+        finalMap.forEach {
             println("mapKey ${it.key}")
         }
 
-        writeCSV(map, fileName)
+        writeCSV(finalMap, fileName)
 
     } catch (e: IOException) {
         e.printStackTrace();
