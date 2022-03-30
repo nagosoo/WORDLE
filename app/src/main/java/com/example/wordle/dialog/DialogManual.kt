@@ -1,4 +1,4 @@
-package com.example.wordle
+package com.example.wordle.dialog
 
 import android.app.AlertDialog
 import android.content.Context

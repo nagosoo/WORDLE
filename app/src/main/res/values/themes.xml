@@ -14,6 +14,9 @@
         <!-- Customize your theme here. -->
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:spinnerItemStyle">@style/MySpinnerItem</item>
+        <item name="spinnerDropDownItemStyle">@style/MySpinnerDropDownItem</item>
+
     </style>
 
     <style name="default_textView">
@@ -33,4 +36,13 @@
         <item name="android:textSize">25sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="MySpinnerItem" parent="@android:style/Widget.TextView.SpinnerItem">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="MySpinnerDropDownItem" parent="Widget.AppCompat.DropDownItem.Spinner">
+    </style>
+
 </resources>

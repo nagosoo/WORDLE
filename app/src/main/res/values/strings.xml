@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Wordle</string>
+    <string-array name="category">
+        <item>동식물</item>
+        <item>음식</item>
+    </string-array>
+
+    <string-array name="level">
+        <item>1단계</item>
+        <item>2단계</item>
+        <item>3단계</item>
+    </string-array>
 </resources>

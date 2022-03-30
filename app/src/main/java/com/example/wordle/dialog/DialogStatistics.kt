@@ -1,4 +1,4 @@
-package com.example.wordle
+package com.example.wordle.dialog
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -12,7 +12,8 @@ class DialogStatistics(
     context: Context,
     private val sp: SharedPreferences,
     private val positiveButtonClickListener: (() -> (Unit))? = null,
-    private val answer: String? = null
+    private val word: String? = null,
+    private val meaning: String? = null
 ) : AlertDialog(context) {
     private val inflater = LayoutInflater.from(context)
     private val binding = DialogStatisticsBinding.inflate(inflater)
@@ -25,9 +26,11 @@ class DialogStatistics(
             matchParentWidth = binding.viewOne.width //height is ready
             setData()
         }
-        if (answer.isNullOrEmpty().not()) setAnswer(answer)
+        if (word.isNullOrEmpty().not()) binding.tvAnswer.text = "정답은 '$word' 이었습니다."
+        if (meaning.isNullOrEmpty().not()) binding.tvMeaning.text = meaning
         if (positiveButtonClickListener == null) {
             binding.tvAnswer.isVisible = false
+            binding.tvMeaning.isVisible = false
             binding.buttonPositive.isVisible = false
             binding.buttonNegative.isVisible = false
         }
@@ -81,10 +84,6 @@ class DialogStatistics(
 
     }
 
-    private fun setAnswer(answer: String? = null) {
-        binding.tvAnswer.text = "정답은 '$answer' 이었습니다."
-    }
-
     private fun setOnClickListener() {
         binding.buttonPositive.setOnClickListener {
             dismiss()
@@ -121,10 +120,11 @@ class DialogStatistics(
         private val context: Context,
         private val sp: SharedPreferences,
         private val positiveButtonClickListener: (() -> (Unit))? = null,
-        private var answer: String? = null
+        private var word: String? = null,
+        private var meaning: String? = null
     ) {
         fun build(): DialogStatistics {
-            return DialogStatistics(context, sp, positiveButtonClickListener, answer)
+            return DialogStatistics(context, sp, positiveButtonClickListener, word, meaning)
         }
     }
 

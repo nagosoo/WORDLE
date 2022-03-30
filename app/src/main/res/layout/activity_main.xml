@@ -12,11 +12,44 @@
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
         android:orientation="horizontal"
-        android:paddingBottom="10dp">
+        android:paddingBottom="10dp"
+        android:paddingStart="10dp">
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:spinnerMode="dropdown"
+            android:background="@drawable/bg_spinner"
+            android:id="@+id/spinnerCategory"
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="5dp" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:spinnerMode="dropdown"
+            android:background="@drawable/bg_spinner"
+            android:id="@+id/spinnerLevel"
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="5dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:stateListAnimator="@null"
+            android:layout_width="50dp"
+            android:layout_height="35dp"
+            android:text="시작"
+            android:background="@drawable/bg_start_button"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="5dp"
+            android:gravity="center"
+            android:id="@+id/buttonStart"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/imageStatistics"

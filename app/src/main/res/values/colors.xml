@@ -14,5 +14,6 @@
     <color name="semi_correct_orange">#e2b43f</color>
     <color name="incorrect_gray">#909bad</color>
     <color name="blue">#326ae3</color>
+    <color name="button_yellow">#fff200</color>
 
 </resources>

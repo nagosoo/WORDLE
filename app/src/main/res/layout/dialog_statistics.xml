@@ -355,8 +355,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="정답입니다!"
+        android:textStyle="bold"
         android:id="@+id/tvAnswer"
         tools:text="정답은 'ㄱㅜㅁㅓㅇ' 이었습니다."/>
+
+    <TextView
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvMeaning"
+        tools:text="어쩌구저쩌구 낱말맞추기"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:gravity="center"

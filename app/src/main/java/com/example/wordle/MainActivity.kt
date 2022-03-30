@@ -6,33 +6,105 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowInsets
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import com.example.wordle.MyApplication.Companion.uiOptions
 import com.example.wordle.databinding.ActivityMainBinding
+import com.example.wordle.dialog.DialogManual
+import com.example.wordle.dialog.DialogStatistics
+import com.example.wordle.status.CategoryType
+import com.example.wordle.status.LevelType
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
-    private var order = 0
+    private var order = -1
     private val sp by lazy { this.getPreferences(Context.MODE_PRIVATE) }
+    private val am by lazy { resources.assets }
     private lateinit var binding: ActivityMainBinding
     private var isLastLetter = false
     private val orange by lazy { ContextCompat.getColor(this, R.color.semi_correct_orange) }
     private val green by lazy { ContextCompat.getColor(this, R.color.correct_green) }
     private val gray by lazy { ContextCompat.getColor(this, R.color.incorrect_gray) }
-    private val sampleWord = arrayOf("ㄱ", "ㅜ", "ㄱ", "ㅓ", "ㅇ")
+
+    private var globalFileName = ""
+    private var globalLevel = -1
+    private lateinit var questionWord: Array<String>
+    private val questionMeaning = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setClickListener()
-        hideBottomBar()
+        setSpinner(binding.spinnerCategory, R.array.category, ::setOnCategoryClickListener)
+        setSpinner(binding.spinnerLevel, R.array.level, ::setOnLevelClickListener)
+        // hideBottomBar()
     }
+
+    private fun setSpinner(
+        spinner: AppCompatSpinner,
+        textArrayResId: Int,
+        itemClickListener: (String) -> (Unit)
+    ) {
+        ArrayAdapter.createFromResource(
+            this,
+            textArrayResId,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
+            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selectedItem = parent?.selectedItem.toString()
+                    itemClickListener(selectedItem)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                }
+            }
+        }
+    }
+
+    private fun setOnCategoryClickListener(category: String) {
+        globalFileName = when (category) {
+            CategoryType.ANIMAL_PLANT.category -> {
+                CategoryType.ANIMAL_PLANT.fileName
+            }
+            CategoryType.FOOD.category -> {
+                CategoryType.FOOD.fileName
+            }
+            else -> ""
+        }
+    }
+
+    private fun setOnLevelClickListener(level: String) {
+        globalLevel = when (level) {
+            LevelType.LEVEL_1.levelString -> {
+                LevelType.LEVEL_1.levelInt
+            }
+            LevelType.LEVEL_2.levelString -> {
+                LevelType.LEVEL_2.levelInt
+            }
+            LevelType.LEVEL_3.levelString -> {
+                LevelType.LEVEL_3.levelInt
+            }
+            else -> -1
+        }
+    }
+
 
     override fun hideBottomBar() {
         if (Build.VERSION.SDK_INT < 30) {
@@ -68,6 +140,29 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
                 sp = sp
             ).build().show()
         }
+
+        binding.buttonStart.setOnClickListener {
+            if (globalFileName.isEmpty() || globalLevel < 1) {
+                Toast.makeText(this, "카테고리와 난이도를 선택해 주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val word = getWord(am, globalFileName, globalLevel) //key - [value1, value2]
+            word?.let {
+                questionWord = it.key
+                questionMeaning.clear()
+                questionMeaning.addAll(it.value)
+
+                for (element in questionWord) {
+                    Log.d("LOGGING", element)
+                }
+                for (element in questionMeaning) {
+                    Log.d("LOGGING", element)
+                }
+            }
+            order = 0
+        }
+
     }
 
     override fun onClick(keyboard: View?) {
@@ -104,21 +199,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
         //마지막까지 못 맞췄을 경우
         if (order == 25) {
             setFailPreference()
-            val answer = sampleWord.joinToString()
-            showStatisticsDialog(answer)
+            showStatisticsDialog()
         }
     }
 
     private fun checkAllCorrect(answerArray: Array<CharSequence>): Boolean {
-        return answerArray.contentEquals(sampleWord)
+        return answerArray.contentEquals(questionWord)
     }
 
     private fun checkSemiCorrect(answerArray: Array<CharSequence>) {
         for (i in 0..4) {
-            if (answerArray[i] == sampleWord[i]) {
+            if (answerArray[i] == questionWord[i]) {
                 setGridViewColor(i, green)
                 setKeyboardColor(i, green)
-            } else if (answerArray[i] != sampleWord[i] && checkContainLetter(answerArray[i])) {
+            } else if (answerArray[i] != questionWord[i] && checkContainLetter(answerArray[i])) {
                 setGridViewColor(i, orange)
                 setKeyboardColor(i, orange)
             } else {
@@ -129,7 +223,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
     }
 
     private fun checkContainLetter(letter: CharSequence): Boolean {
-        return sampleWord.contains(letter)
+        return questionWord.contains(letter)
     }
 
     private fun setGridViewColor(i: Int, color: Int) {
@@ -142,9 +236,29 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
         keyboard.setBackgroundColor(color)
     }
 
-    private fun showStatisticsDialog(answer: String? = null) {
+    private fun showStatisticsDialog() {
         order = -1
-        DialogStatistics.Builder(this, sp, ::setOnPositiveButtonClickListener, answer).build()
+
+        val parsedMeaning = ""
+        val iterator = questionMeaning.iterator()
+
+        while(iterator.hasNext()){
+            var cnt = 1
+            val next = iterator.next()
+            val meaning = next.replace("\"", "")
+            parsedMeaning.plus("$cnt.$meaning\n")
+            cnt+=1
+        }
+
+        Log.d("LOGGING", parsedMeaning)
+
+        DialogStatistics.Builder(
+            context = this,
+            sp = sp,
+            positiveButtonClickListener = ::setOnPositiveButtonClickListener,
+            word = questionWord.joinToString(),
+            meaning = parsedMeaning
+        ).build()
             .show()
     }
 
