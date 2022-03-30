@@ -9,6 +9,7 @@ class DialogManual(context: Context) : AlertDialog(context) {
     init {
         val inflater = LayoutInflater.from(context)
         val binding = DialogManualBinding.inflate(inflater)
+
         setView(binding.root)
     }
 

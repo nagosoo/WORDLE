@@ -4,13 +4,14 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import com.example.wordle.databinding.DialogStatisticsBinding
 import kotlin.math.roundToInt
 
 class DialogStatistics(
     context: Context,
     private val sp: SharedPreferences,
-    private val positiveButtonClickListener: () -> (Unit),
+    private val positiveButtonClickListener: (() -> (Unit))? = null,
     private val answer: String? = null
 ) : AlertDialog(context) {
     private val inflater = LayoutInflater.from(context)
@@ -24,8 +25,13 @@ class DialogStatistics(
             matchParentWidth = binding.viewOne.width //height is ready
             setData()
         }
-        setOnClickListener()
         if (answer.isNullOrEmpty().not()) setAnswer(answer)
+        if (positiveButtonClickListener == null) {
+            binding.tvAnswer.isVisible = false
+            binding.buttonPositive.isVisible = false
+            binding.buttonNegative.isVisible = false
+        }
+        setOnClickListener()
     }
 
     private fun setData() {
@@ -64,8 +70,7 @@ class DialogStatistics(
             binding.viewFour.layoutParams.width = 0
             binding.viewFive.layoutParams.width = 0
             binding.viewSix.layoutParams.width = 0
-        }
-        else {
+        } else {
             binding.viewOne.layoutParams.width = matchParentWidth * getSuccessNumAt(1) / maxValue
             binding.viewTwo.layoutParams.width = matchParentWidth * getSuccessNumAt(2) / maxValue
             binding.viewThree.layoutParams.width = matchParentWidth * getSuccessNumAt(3) / maxValue
@@ -83,7 +88,7 @@ class DialogStatistics(
     private fun setOnClickListener() {
         binding.buttonPositive.setOnClickListener {
             dismiss()
-            positiveButtonClickListener()
+            positiveButtonClickListener?.let { it -> it() }
         }
         binding.buttonNegative.setOnClickListener {
             dismiss()
@@ -111,10 +116,11 @@ class DialogStatistics(
         return mapOf(list.indexOf(max) + 1 to max)
     }
 
+
     class Builder(
         private val context: Context,
         private val sp: SharedPreferences,
-        private val positiveButtonClickListener: () -> (Unit),
+        private val positiveButtonClickListener: (() -> (Unit))? = null,
         private var answer: String? = null
     ) {
         fun build(): DialogStatistics {

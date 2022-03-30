@@ -3,6 +3,7 @@ package com.example.wordle
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.widget.TextView
@@ -11,10 +12,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
+import com.example.wordle.MyApplication.Companion.uiOptions
 import com.example.wordle.databinding.ActivityMainBinding
 
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
     private var order = 0
     private val sp by lazy { this.getPreferences(Context.MODE_PRIVATE) }
     private lateinit var binding: ActivityMainBinding
@@ -28,15 +30,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        hideBottomNav()
         setClickListener()
-
+        hideBottomBar()
     }
 
-    private fun hideBottomNav() {
+    override fun hideBottomBar() {
         if (Build.VERSION.SDK_INT < 30) {
-            val uiOptions =
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
             window.decorView.systemUiVisibility = uiOptions
         } else {
             window.decorView.windowInsetsController!!.hide(WindowInsets.Type.statusBars())
@@ -61,6 +60,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
         binding.imageManual.setOnClickListener {
             DialogManual.Builder(this).build().show()
+        }
+
+        binding.imageStatistics.setOnClickListener {
+            DialogStatistics.Builder(
+                context = this,
+                sp = sp
+            ).build().show()
         }
     }
 
