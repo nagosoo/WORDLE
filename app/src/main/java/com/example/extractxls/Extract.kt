@@ -6,7 +6,7 @@ import java.nio.charset.Charset
 
 fun main() {
     try {
-        val fileName = "animal_plant_3"
+        val fileName = "animal_plant_1"
 
         val br = BufferedReader(
             (InputStreamReader(
@@ -18,37 +18,33 @@ fun main() {
         val list = br.use(BufferedReader::readLines)
         br.close()
 
-        val map = getMap(list) // Key - value
+        val map = getMap(list) // Key - [value1, value2]
         val iterator = map.iterator()
-        val finalMap = mutableMapOf<String, String>() //key 가 ㄱㅏㅁㅈㅏ 형식
+        val finalMap = mutableMapOf<String,MutableList<String>>() //key - ㄱㅏㅁㅈㅏ
 
         while (iterator.hasNext()) {
             val next = iterator.next()
             val separatedWord = Util().doSeparating(next.key)
             if (separatedWord.first) {
-                finalMap[separatedWord.second!!] = next.value
+                finalMap.put(separatedWord.second!! to next.value)
             }
         }
 
-        finalMap.forEach {
-            println("mapKey ${it.key}")
-        }
-
-        writeCSV(finalMap, fileName)
+        //writeCSV(finalMap, fileName)
 
     } catch (e: IOException) {
         e.printStackTrace();
     }
 }
 
-private fun getMap(list: List<String>): MutableMap<String, String> {
-    val map = mutableMapOf<String, String>()
+private fun getMap(list: List<String>): HashMap<String, MutableList<String>> {
+    val pairList = mutableListOf<Pair<String, String>>()
     list.map {
         val splitList = it.split(",", ignoreCase = false, limit = 2) //limit > 최대 두개 까지의 요소만 리턴
-        map.put(splitList[0], splitList[1])
+        pairList.add(splitList[0] to splitList[1])
     }
 
-    return map
+    return pairList.groupByTo(HashMap(), { it.first }, { it.second })
 }
 
 
