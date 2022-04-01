@@ -245,8 +245,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
         while(iterator.hasNext()){
             var cnt = 1
             val next = iterator.next()
+            Log.d("LOGGING", next)
             val meaning = next.replace("\"", "")
             parsedMeaning.plus("$cnt.$meaning\n")
+            Log.d("LOGGING", meaning)
             cnt+=1
         }
 
