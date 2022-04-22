@@ -12,8 +12,8 @@ class DialogStatistics(
     context: Context,
     private val sp: SharedPreferences,
     private val positiveButtonClickListener: (() -> (Unit))? = null,
-    private val word: String? = null,
-    private val meaning: String? = null
+    word: String? = null,
+    meaning: String? = null
 ) : AlertDialog(context) {
     private val inflater = LayoutInflater.from(context)
     private val binding = DialogStatisticsBinding.inflate(inflater)
