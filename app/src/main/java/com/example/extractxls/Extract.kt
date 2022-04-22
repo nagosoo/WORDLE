@@ -20,17 +20,21 @@ fun main() {
 
         val map = getMap(list) // Key - [value1, value2]
         val iterator = map.iterator()
-        val finalMap = mutableMapOf<String,MutableList<String>>() //key - ㄱㅏㅁㅈㅏ
+        val finalMap = mutableMapOf<String, MutableList<String>>() //key - ㄱㅏㅁㅈㅏ
 
         while (iterator.hasNext()) {
             val next = iterator.next()
             val separatedWord = Util().doSeparating(next.key)
             if (separatedWord.first) {
-                finalMap.put(separatedWord.second!! to next.value)
+                finalMap[separatedWord.second!!] = next.value
             }
         }
 
-        //writeCSV(finalMap, fileName)
+//        finalMap.forEach {
+//            println("${it.key} : ${it.value}")
+//        }
+
+        writeCSV(finalMap, fileName)
 
     } catch (e: IOException) {
         e.printStackTrace();
@@ -48,7 +52,7 @@ private fun getMap(list: List<String>): HashMap<String, MutableList<String>> {
 }
 
 
-private fun writeCSV(map: Map<String, String>, fileName: String) {
+private fun writeCSV(map: Map<String, List<String>>, fileName: String) {
     try {
         val bw =
             BufferedWriter(FileWriter(("/Users/bag-eunji/deskTop/${fileName}_filtered.csv"), true))
