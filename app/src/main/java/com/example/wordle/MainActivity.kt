@@ -1,8 +1,12 @@
 package com.example.wordle
 
 import android.content.Context
+import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.WindowInsets
@@ -15,11 +19,11 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
-import androidx.core.view.isVisible
 import com.example.wordle.MyApplication.Companion.uiOptions
 import com.example.wordle.databinding.ActivityMainBinding
 import com.example.wordle.dialog.DialogManual
 import com.example.wordle.dialog.DialogStatistics
+import com.example.wordle.dialog.ProgressDialog
 import com.example.wordle.status.CategoryType
 import com.example.wordle.status.LevelType
 
@@ -33,12 +37,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
     private val orange by lazy { ContextCompat.getColor(this, R.color.semi_correct_orange) }
     private val green by lazy { ContextCompat.getColor(this, R.color.correct_green) }
     private val gray by lazy { ContextCompat.getColor(this, R.color.incorrect_gray) }
-    private val defaultGrey by lazy { ContextCompat.getColor(this, R.color.default_gray) }
 
     private var globalFileName = ""
     private var globalLevel = -1
     private lateinit var questionWord: Array<String>
     private lateinit var questionMeaning: String
+    private lateinit var progressDialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -144,6 +148,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
         }
 
         binding.buttonStart.setOnClickListener {
+            progressDialog = ProgressDialog(this)
+            progressDialog.show()
+
             if (globalFileName.isEmpty() || globalLevel < 1) {
                 Toast.makeText(this, "카테고리와 난이도를 선택해 주세요.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -163,7 +170,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
             }
             order = 0
 
-            it.isVisible=false
+            with(it as? AppCompatButton) {
+                this?.text = "진행중"
+                this?.isClickable = false
+            }
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                progressDialog.dismiss()
+            }, 300)
         }
 
     }
@@ -255,8 +269,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
     }
 
     private fun setOnPositiveButtonClickListener() {
-        finish()
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
+        finish()
+
     }
 
     private fun setSuccessPreference(successAtRow: Int) {
@@ -293,6 +309,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
                 this.putStringSet("successiveSuccessArray", set)
             }
             apply()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        progressDialog.let {
+            if (it.isShowing) it.dismiss()
         }
     }
 }

@@ -4,12 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/bg_default_green.xml" value="0.2205" />
+        <entry key="app/src/main/res/drawable/bg_spinner.xml" value="0.153" />
         <entry key="app/src/main/res/drawable/ic_baseline_format_list_numbered_rtl_24.xml" value="0.2235" />
         <entry key="app/src/main/res/drawable/ic_baseline_help_outline_24.xml" value="0.2235" />
         <entry key="app/src/main/res/drawable/ripple_default.xml" value="0.2205" />
         <entry key="app/src/main/res/drawable/selection_grid_answer.xml" value="0.2205" />
+        <entry key="app/src/main/res/drawable/spinner.xml" value="0.153" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3967025756835938" />
         <entry key="app/src/main/res/layout/dialog_manual.xml" value="0.13229166666666667" />
+        <entry key="app/src/main/res/layout/dialog_progress.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/dialog_statistics.xml" value="0.13229166666666667" />
         <entry key="app/src/main/res/layout/grid_layout.xml" value="0.9572937011718753" />
         <entry key="app/src/main/res/layout/jaeum_keyboard.xml" value="0.14" />

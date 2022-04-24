@@ -45,4 +45,8 @@
     <style name="MySpinnerDropDownItem" parent="Widget.AppCompat.DropDownItem.Spinner">
     </style>
 
+    <style name="MySplash" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+    </style>
+
 </resources>
