@@ -15,6 +15,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
+import androidx.core.view.isVisible
 import com.example.wordle.MyApplication.Companion.uiOptions
 import com.example.wordle.databinding.ActivityMainBinding
 import com.example.wordle.dialog.DialogManual
@@ -32,11 +33,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
     private val orange by lazy { ContextCompat.getColor(this, R.color.semi_correct_orange) }
     private val green by lazy { ContextCompat.getColor(this, R.color.correct_green) }
     private val gray by lazy { ContextCompat.getColor(this, R.color.incorrect_gray) }
+    private val defaultGrey by lazy { ContextCompat.getColor(this, R.color.default_gray) }
 
     private var globalFileName = ""
     private var globalLevel = -1
     private lateinit var questionWord: Array<String>
-    private val questionMeaning = mutableListOf<String>()
+    private lateinit var questionMeaning: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -147,20 +149,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
                 return@setOnClickListener
             }
 
-            val word = getWord(am, globalFileName, globalLevel) //key - [value1, value2]
+            val word = getWord(am, globalFileName, globalLevel)
             word?.let {
                 questionWord = it.key
-                questionMeaning.clear()
-                questionMeaning.addAll(it.value)
+                questionMeaning = ""
+                questionMeaning = it.value
 
                 for (element in questionWord) {
                     Log.d("LOGGING", element)
                 }
-                for (element in questionMeaning) {
-                    Log.d("LOGGING", element)
-                }
+                Log.d("LOGGING", questionMeaning)
+
             }
             order = 0
+
+            it.isVisible=false
         }
 
     }
@@ -239,20 +242,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
     private fun showStatisticsDialog() {
         order = -1
 
-        val parsedMeaning = ""
-        val iterator = questionMeaning.iterator()
-
-        while(iterator.hasNext()){
-            var cnt = 1
-            val next = iterator.next()
-            Log.d("LOGGING", next)
-            val meaning = next.replace("\"", "")
-            parsedMeaning.plus("$cnt.$meaning\n")
-            Log.d("LOGGING", meaning)
-            cnt+=1
-        }
-
-        Log.d("LOGGING", parsedMeaning)
+        val parsedMeaning = questionMeaning
 
         DialogStatistics.Builder(
             context = this,
