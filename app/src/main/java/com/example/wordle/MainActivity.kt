@@ -2,7 +2,7 @@ package com.example.wordle
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -26,6 +26,8 @@ import com.example.wordle.dialog.DialogStatistics
 import com.example.wordle.dialog.ProgressDialog
 import com.example.wordle.status.CategoryType
 import com.example.wordle.status.LevelType
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.ktx.Firebase
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
@@ -51,7 +53,36 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
         setClickListener()
         setSpinner(binding.spinnerCategory, R.array.category, ::setOnCategoryClickListener)
         setSpinner(binding.spinnerLevel, R.array.level, ::setOnLevelClickListener)
+
+        checkFromDeepLink()
+        showManualDialog()
+
         // hideBottomBar()
+    }
+
+    private fun showManualDialog() {
+        val isFirstTime = sp.getBoolean("isFirst", false)
+        if (!isFirstTime) {
+            DialogManual.Builder(this).build().show()
+            with(sp.edit()) {
+                this.putBoolean("isFirst", true)
+                apply()
+            }
+        }
+    }
+
+    private fun checkFromDeepLink() {
+        Firebase.dynamicLinks
+            .getDynamicLink(intent)
+            .addOnSuccessListener(this) { pendingDynamicLinkData ->
+                // Get deep link from result (may be null if no link is found)
+                var deepLink: Uri? = null
+                if (pendingDynamicLinkData != null) {
+                    deepLink = pendingDynamicLinkData.link
+                }
+                Log.d("LOGGING", "YEAH!!!")
+            }
+            .addOnFailureListener(this) { e -> Log.w("LOGGING", "getDynamicLink:onFailure", e) }
     }
 
     private fun setSpinner(
@@ -130,7 +161,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
         }
 
         binding.keyboard.delete.setOnClickListener {
-            if (isLastLetter || order % 5 != 0) {
+            if (isLastLetter || order % 5 > 0) {
                 if (isLastLetter) isLastLetter = false
                 order -= 1
                 (binding.gridLayout.gridLayout[order] as TextView).text = ""

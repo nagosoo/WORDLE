@@ -1,8 +1,12 @@
 package com.example.wordle.dialog
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
+import android.content.Context.CLIPBOARD_SERVICE
 import android.content.SharedPreferences
 import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import com.example.wordle.databinding.DialogStatisticsBinding
@@ -42,7 +46,7 @@ class DialogStatistics(
         val successiveSuccess = sp.getInt("successiveSuccess", 0)
 
         binding.tvTotalTry.text = totalTry.toString()
-        val decimal = getSuccessNumSum() / totalTry.toDouble()
+        val decimal = if (totalTry != 0) getSuccessNumSum() / totalTry.toDouble() else 0.toDouble()
         val quotient = (decimal * 100).roundToInt()
         binding.tvPercentage.text = "$quotient%"
         binding.tvCurrentSuccessive.text = successiveSuccess.toString()
@@ -91,6 +95,12 @@ class DialogStatistics(
         }
         binding.buttonNegative.setOnClickListener {
             dismiss()
+        }
+        binding.ButtonShare.setOnClickListener {
+            val clipboard = context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+            val clip: ClipData = ClipData.newPlainText("appUrl", "https://worlde.page.link/Tbeh")
+            clipboard.setPrimaryClip(clip)
+            Toast.makeText(context, "링크가 복사되었습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 

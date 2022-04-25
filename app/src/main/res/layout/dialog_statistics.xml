@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,401 +9,423 @@
     android:orientation="vertical"
     android:padding="20dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="10dp"
-        android:text="통계"
-        android:textSize="25sp" />
-
-
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
+        android:scrollbars="none">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvTotalTry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="30sp"
-                tools:text="1" />
+                android:layout_marginBottom="10dp"
+                android:text="통계"
+                android:textSize="25sp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTotalTry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textSize="30sp"
+                        tools:text="1" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="총 시도 횟수"
+                        android:textSize="15sp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPercentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textSize="30sp"
+                        tools:text="100%" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="성공률"
+                        android:textSize="15sp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCurrentSuccessive"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textSize="30sp"
+                        tools:text="1" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="현재 연속 성공"
+                        android:textSize="15sp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvMaxSuccessive"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textSize="30sp"
+                        tools:text="1" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="최대 연속 성공"
+                        android:textSize="15sp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:text="시도 회수 분포"
+                android:textSize="20sp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="1"
+                    android:textSize="18sp" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:id="@+id/viewOne"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@drawable/bg_statistics" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvOne"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        tools:text="1" />
+
+                </FrameLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="2"
+                    android:textSize="18sp" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:id="@+id/viewTwo"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@drawable/bg_statistics" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTwo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        tools:text="1" />
+
+                </FrameLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="3"
+                    android:textSize="18sp" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:id="@+id/viewThree"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@drawable/bg_statistics" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvThree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        tools:text="1" />
+
+                </FrameLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="4"
+                    android:textSize="18sp" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:id="@+id/viewFour"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@drawable/bg_statistics" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvFour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        tools:text="1" />
+
+                </FrameLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="5"
+                    android:textSize="18sp" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:id="@+id/viewFive"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@drawable/bg_statistics" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvFive"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        tools:text="1" />
+
+                </FrameLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="6"
+                    android:textSize="18sp" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:id="@+id/viewSix"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@drawable/bg_statistics" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvSix"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        tools:text="1" />
+
+                </FrameLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <TextView
+                android:id="@+id/tvAnswer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
                 android:gravity="center"
-                android:text="총 시도 횟수"
-                android:textSize="15sp" />
+                android:text="정답입니다!"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="정답은 'ㄱㅜㅁㅓㅇ' 이었습니다." />
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvPercentage"
+            <TextView
+                android:id="@+id/tvMeaning"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="30sp"
-                tools:text="100%" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="성공률"
-                android:textSize="15sp" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvCurrentSuccessive"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textSize="30sp"
-                tools:text="1" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="현재 연속 성공"
-                android:textSize="15sp" />
+                android:textSize="18sp"
+                tools:text="어쩌구저쩌구 낱말맞추기" />
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvMaxSuccessive"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/ButtonShare"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="30sp"
-                tools:text="1" />
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/white"
+                android:drawablePadding="10dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:stateListAnimator="@null"
+                android:text="공유하기"
+                android:textSize="20sp" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:gravity="center"
-                android:text="최대 연속 성공"
-                android:textSize="15sp" />
+                android:orientation="horizontal">
 
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonPositive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/white"
+                    android:drawableStart="@drawable/drawable_replay"
+                    android:drawablePadding="10dp"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:stateListAnimator="@null"
+                    android:text="다시하기"
+                    android:textSize="20sp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonNegative"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/white"
+                    android:drawablePadding="10dp"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:stateListAnimator="@null"
+                    android:text="그만하기"
+                    android:textSize="20sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:text="시도 회수 분포"
-        android:textSize="20sp" />
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:text="1"
-            android:textSize="18sp" />
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <View
-                android:id="@+id/viewOne"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@drawable/bg_statistics" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvOne"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                tools:text="1" />
-
-        </FrameLayout>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:text="2"
-            android:textSize="18sp" />
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <View
-                android:id="@+id/viewTwo"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@drawable/bg_statistics" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvTwo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                tools:text="1" />
-
-        </FrameLayout>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:text="3"
-            android:textSize="18sp" />
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <View
-                android:id="@+id/viewThree"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@drawable/bg_statistics" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvThree"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                tools:text="1" />
-
-        </FrameLayout>
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:text="4"
-            android:textSize="18sp" />
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <View
-                android:id="@+id/viewFour"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@drawable/bg_statistics" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvFour"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                tools:text="1" />
-
-        </FrameLayout>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:text="5"
-            android:textSize="18sp" />
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <View
-                android:id="@+id/viewFive"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@drawable/bg_statistics" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvFive"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                tools:text="1" />
-
-        </FrameLayout>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:text="6"
-            android:textSize="18sp" />
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <View
-                android:id="@+id/viewSix"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@drawable/bg_statistics" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvSix"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                tools:text="1" />
-
-        </FrameLayout>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <TextView
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:layout_marginTop="15dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="정답입니다!"
-        android:textStyle="bold"
-        android:id="@+id/tvAnswer"
-        tools:text="정답은 'ㄱㅜㅁㅓㅇ' 이었습니다."/>
-
-    <TextView
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvMeaning"
-        tools:text="어쩌구저쩌구 낱말맞추기"/>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonPositive"
-        android:layout_gravity="center"
-        android:drawablePadding="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="@color/white"
-        android:drawableStart="@drawable/drawable_replay"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:stateListAnimator="@null"
-        android:text="다시하기"
-        android:textSize="20sp" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonNegative"
-        android:layout_gravity="center"
-        android:drawablePadding="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="@color/white"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:stateListAnimator="@null"
-        android:text="그만하기"
-        android:textSize="20sp" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
+    </ScrollView>
 </androidx.appcompat.widget.LinearLayoutCompat>
