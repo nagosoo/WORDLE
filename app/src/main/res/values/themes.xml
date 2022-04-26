@@ -16,6 +16,7 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:spinnerItemStyle">@style/MySpinnerItem</item>
         <item name="spinnerDropDownItemStyle">@style/MySpinnerDropDownItem</item>
+        <item name="android:windowDisablePreview">true</item>
 
     </style>
 
