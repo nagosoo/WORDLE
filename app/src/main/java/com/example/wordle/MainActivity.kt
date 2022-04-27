@@ -54,7 +54,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
         setSpinner(binding.spinnerCategory, R.array.category, ::setOnCategoryClickListener)
         setSpinner(binding.spinnerLevel, R.array.level, ::setOnLevelClickListener)
 
-        checkFromDeepLink()
         showManualDialog()
 
         // hideBottomBar()
@@ -69,20 +68,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
                 apply()
             }
         }
-    }
-
-    private fun checkFromDeepLink() {
-        Firebase.dynamicLinks
-            .getDynamicLink(intent)
-            .addOnSuccessListener(this) { pendingDynamicLinkData ->
-                // Get deep link from result (may be null if no link is found)
-                var deepLink: Uri? = null
-                if (pendingDynamicLinkData != null) {
-                    deepLink = pendingDynamicLinkData.link
-                }
-                Log.d("LOGGING", "YEAH!!!")
-            }
-            .addOnFailureListener(this) { e -> Log.w("LOGGING", "getDynamicLink:onFailure", e) }
     }
 
     private fun setSpinner(

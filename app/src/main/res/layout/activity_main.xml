@@ -36,7 +36,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:stateListAnimator="@null"
-            android:layout_width="50dp"
+            android:layout_width="70dp"
             android:layout_height="35dp"
             android:text="시작"
             android:background="@drawable/bg_start_button"
