@@ -3,7 +3,7 @@
     <item android:drawable="@android:color/white" />
     <item>
         <bitmap
-            android:src="@drawable/splash_gif"
+            android:src="@drawable/ic_puzzle"
             android:gravity="center"/>
     </item>
 </layer-list>
