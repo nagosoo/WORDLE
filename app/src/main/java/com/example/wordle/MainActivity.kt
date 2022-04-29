@@ -1,8 +1,8 @@
 package com.example.wordle
 
+import android.animation.Animator
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -26,22 +26,20 @@ import com.example.wordle.dialog.DialogStatistics
 import com.example.wordle.dialog.ProgressDialog
 import com.example.wordle.status.CategoryType
 import com.example.wordle.status.LevelType
-import com.google.firebase.dynamiclinks.ktx.dynamicLinks
-import com.google.firebase.ktx.Firebase
 
 
-class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var order = -1
     private val sp by lazy { this.getPreferences(Context.MODE_PRIVATE) }
-    private val am by lazy { resources.assets }
     private lateinit var binding: ActivityMainBinding
     private var isLastLetter = false
     private val orange by lazy { ContextCompat.getColor(this, R.color.semi_correct_orange) }
     private val green by lazy { ContextCompat.getColor(this, R.color.correct_green) }
     private val gray by lazy { ContextCompat.getColor(this, R.color.incorrect_gray) }
-
     private var globalFileName = ""
     private var globalLevel = -1
+    private var currentAnimator: Animator? = null
+    private var shortAnimationDuration: Int = 0
     private lateinit var questionWord: Array<String>
     private lateinit var questionMeaning: String
     private lateinit var progressDialog: ProgressDialog
@@ -128,7 +126,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
     }
 
 
-    override fun hideBottomBar() {
+    fun hideBottomBar() {
         if (Build.VERSION.SDK_INT < 30) {
             window.decorView.systemUiVisibility = uiOptions
         } else {
@@ -172,10 +170,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
                 return@setOnClickListener
             }
 
-            val word = getWord(am, globalFileName, globalLevel)
+            val word = getWord(resources.assets, globalFileName, globalLevel)
             word?.let {
                 questionWord = it.key
-                questionMeaning = ""
                 questionMeaning = it.value
 
                 for (element in questionWord) {
@@ -201,11 +198,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HideBottomBar {
     override fun onClick(keyboard: View?) {
         if (isLastLetter) return
         if (order in 0..24) {
-            (binding.gridLayout.gridLayout[order] as TextView).text =
-                (keyboard as AppCompatButton).text
+            //animator
+            zoomTextView(binding.gridLayout.gridLayout[order])
+            (binding.gridLayout.gridLayout[order] as TextView).text = (keyboard as AppCompatButton).text
+            shortAnimationDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
             order += 1
             if (order % 5 == 0) isLastLetter = true
         }
+    }
+
+    private fun zoomTextView(view: View) {
+        currentAnimator?.cancel()
+        val expandedTextView = findViewById<TextView>(R.id.bigTv)
+
     }
 
     private fun checkAnswer() {

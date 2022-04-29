@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="button_grey">#ededed</color>
     <color name="default_gray">#818384</color>
     <color name="keyboard_gray">#dfe1e7</color>
     <color name="correct_green">#5ec169</color>

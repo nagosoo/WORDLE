@@ -20,7 +20,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:text="WORDLE을 6번 만에 맞춰보세요.\n시도의 결과는 타일의 색 변화로 나타납니다.\nㅖ는 ㅔㅔ와 같이 풀어 쓰고, ㅢ는 ㅡㅣ와 같이 풀어쓰니 주의 해 주세요!\n쌍자음, 이중모음, 겹받침은 포함 되지 않습니다."
+        android:text="WORDLE을 6번 만에 맞춰보세요.\n시도의 결과는 타일의 색 변화로 나타납니다.\n쌍자음, 이중모음, 겹받침은 포함 되지 않습니다."
         android:textSize="18sp" />
 
     <androidx.appcompat.widget.LinearLayoutCompat

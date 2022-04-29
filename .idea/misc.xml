@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../Library/Android/sdk/platforms/android-31/data/res/layout/simple_spinner_dropdown_item.xml" value="0.23777173913043478" />
+        <entry key="app/src/main/res/drawable-xxxhdpi/bg_grey_button.xml" value="0.2855" />
         <entry key="app/src/main/res/drawable/bg_default_green.xml" value="0.2205" />
         <entry key="app/src/main/res/drawable/bg_spinner.xml" value="0.153" />
         <entry key="app/src/main/res/drawable/bg_splash.xml" value="0.2855" />
@@ -13,13 +15,14 @@
         <entry key="app/src/main/res/drawable/selection_grid_answer.xml" value="0.2205" />
         <entry key="app/src/main/res/drawable/spinner.xml" value="0.153" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3967025756835938" />
-        <entry key="app/src/main/res/layout/dialog_manual.xml" value="0.13229166666666667" />
+        <entry key="app/src/main/res/layout/dialog_manual.xml" value="0.18" />
         <entry key="app/src/main/res/layout/dialog_progress.xml" value="0.19610507246376813" />
-        <entry key="app/src/main/res/layout/dialog_statistics.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/dialog_statistics.xml" value="0.22" />
         <entry key="app/src/main/res/layout/grid_layout.xml" value="0.9572937011718753" />
         <entry key="app/src/main/res/layout/jaeum_keyboard.xml" value="0.14" />
         <entry key="app/src/main/res/layout/keyboard.xml" value="0.18" />
         <entry key="app/src/main/res/layout/moeum_keyboard.xml" value="0.21666666666666667" />
+        <entry key="app/src/main/res/layout/small_big_textview.xml" value="0.25" />
       </map>
     </option>
   </component>

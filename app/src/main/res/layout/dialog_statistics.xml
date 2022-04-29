@@ -52,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="총 시도 횟수"
+                        android:text="총 시도\n횟수"
                         android:textSize="15sp" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -379,13 +379,13 @@
                 tools:text="어쩌구저쩌구 낱말맞추기" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:background="@drawable/bg_grey_button"
                 android:id="@+id/ButtonShare"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:backgroundTint="@color/white"
-                android:drawablePadding="10dp"
+                android:padding="10dp"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
                 android:stateListAnimator="@null"
