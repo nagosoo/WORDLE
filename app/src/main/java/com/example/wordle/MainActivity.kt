@@ -1,15 +1,13 @@
 package com.example.wordle
 
-import android.animation.Animator
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
-import android.view.WindowInsets
+import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
@@ -19,7 +17,6 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
-import com.example.wordle.MyApplication.Companion.uiOptions
 import com.example.wordle.databinding.ActivityMainBinding
 import com.example.wordle.dialog.DialogManual
 import com.example.wordle.dialog.DialogStatistics
@@ -38,8 +35,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private val gray by lazy { ContextCompat.getColor(this, R.color.incorrect_gray) }
     private var globalFileName = ""
     private var globalLevel = -1
-    private var currentAnimator: Animator? = null
-    private var shortAnimationDuration: Int = 0
     private lateinit var questionWord: Array<String>
     private lateinit var questionMeaning: String
     private lateinit var progressDialog: ProgressDialog
@@ -53,8 +48,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setSpinner(binding.spinnerLevel, R.array.level, ::setOnLevelClickListener)
 
         showManualDialog()
-
-        // hideBottomBar()
     }
 
     private fun showManualDialog() {
@@ -125,15 +118,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-
-    fun hideBottomBar() {
-        if (Build.VERSION.SDK_INT < 30) {
-            window.decorView.systemUiVisibility = uiOptions
-        } else {
-            window.decorView.windowInsetsController!!.hide(WindowInsets.Type.statusBars())
-        }
-    }
-
     private fun setClickListener() {
         binding.keyboard.enter.setOnClickListener {
             if (isLastLetter) {
@@ -198,19 +182,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(keyboard: View?) {
         if (isLastLetter) return
         if (order in 0..24) {
-            //animator
-            zoomTextView(binding.gridLayout.gridLayout[order])
             (binding.gridLayout.gridLayout[order] as TextView).text = (keyboard as AppCompatButton).text
-            shortAnimationDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
+            val aniBounce = AnimationUtils.loadAnimation(this, R.anim.scale_animation)
+            binding.gridLayout.gridLayout[order].startAnimation(aniBounce)
             order += 1
             if (order % 5 == 0) isLastLetter = true
         }
-    }
-
-    private fun zoomTextView(view: View) {
-        currentAnimator?.cancel()
-        val expandedTextView = findViewById<TextView>(R.id.bigTv)
-
     }
 
     private fun checkAnswer() {
