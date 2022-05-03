@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private val green by lazy { ContextCompat.getColor(this, R.color.correct_green) }
     private val gray by lazy { ContextCompat.getColor(this, R.color.incorrect_gray) }
     private val viewModel: MainViewModel by viewModels()
+    lateinit var progressDialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -143,8 +144,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         binding.buttonStart.setOnClickListener {
-            viewModel.progressDialog = ProgressDialog(this)
-            viewModel.progressDialog.show()
+            progressDialog = ProgressDialog(this)
+            progressDialog.show()
 
             if (viewModel.globalFileName.isEmpty() || viewModel.globalLevel < 1) {
                 Toast.makeText(this, "카테고리와 난이도를 선택해 주세요.", Toast.LENGTH_SHORT).show()
@@ -170,7 +171,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             Handler(Looper.getMainLooper()).postDelayed({
-                viewModel.progressDialog.dismiss()
+                progressDialog.dismiss()
             }, 300)
         }
 
@@ -313,7 +314,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.progressDialog.let {
+        progressDialog.let {
             if (it.isShowing) it.dismiss()
         }
     }

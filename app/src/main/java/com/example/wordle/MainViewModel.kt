@@ -9,5 +9,4 @@ class MainViewModel : ViewModel() {
     var globalLevel = -1
     lateinit var questionWord: Array<String>
     lateinit var questionMeaning: String
-    lateinit var progressDialog: ProgressDialog
 }
