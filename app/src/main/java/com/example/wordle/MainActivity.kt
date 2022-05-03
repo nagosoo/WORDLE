@@ -12,6 +12,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatSpinner
@@ -33,11 +34,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private val orange by lazy { ContextCompat.getColor(this, R.color.semi_correct_orange) }
     private val green by lazy { ContextCompat.getColor(this, R.color.correct_green) }
     private val gray by lazy { ContextCompat.getColor(this, R.color.incorrect_gray) }
-    private var globalFileName = ""
-    private var globalLevel = -1
-    private lateinit var questionWord: Array<String>
-    private lateinit var questionMeaning: String
-    private lateinit var progressDialog: ProgressDialog
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,7 +89,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setOnCategoryClickListener(category: String) {
-        globalFileName = when (category) {
+        viewModel.globalFileName = when (category) {
             CategoryType.ANIMAL_PLANT.category -> {
                 CategoryType.ANIMAL_PLANT.fileName
             }
@@ -104,7 +101,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setOnLevelClickListener(level: String) {
-        globalLevel = when (level) {
+        viewModel.globalLevel = when (level) {
             LevelType.LEVEL_1.levelString -> {
                 LevelType.LEVEL_1.levelInt
             }
@@ -146,23 +143,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         binding.buttonStart.setOnClickListener {
-            progressDialog = ProgressDialog(this)
-            progressDialog.show()
+            viewModel.progressDialog = ProgressDialog(this)
+            viewModel.progressDialog.show()
 
-            if (globalFileName.isEmpty() || globalLevel < 1) {
+            if (viewModel.globalFileName.isEmpty() || viewModel.globalLevel < 1) {
                 Toast.makeText(this, "카테고리와 난이도를 선택해 주세요.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            val word = getWord(resources.assets, globalFileName, globalLevel)
+            val word = getWord(resources.assets, viewModel.globalFileName, viewModel.globalLevel)
             word?.let {
-                questionWord = it.key
-                questionMeaning = it.value
+                viewModel.questionWord = it.key
+                viewModel.questionMeaning = it.value
 
-                for (element in questionWord) {
+                for (element in viewModel.questionWord) {
                     Log.d("LOGGING", element)
                 }
-                Log.d("LOGGING", questionMeaning)
+                Log.d("LOGGING", viewModel.questionMeaning)
 
             }
             order = 0
@@ -173,7 +170,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             Handler(Looper.getMainLooper()).postDelayed({
-                progressDialog.dismiss()
+                viewModel.progressDialog.dismiss()
             }, 300)
         }
 
@@ -193,11 +190,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun checkAnswer() {
         isLastLetter = false
 
-        val first = (binding.gridLayout.gridLayout[order - 5] as TextView).text
-        val second = (binding.gridLayout.gridLayout[order - 4] as TextView).text
-        val third = (binding.gridLayout.gridLayout[order - 3] as TextView).text
-        val fourth = (binding.gridLayout.gridLayout[order - 2] as TextView).text
-        val fifth = (binding.gridLayout.gridLayout[order - 1] as TextView).text
+        val first = getInputText(order - 5)
+        val second = getInputText(order - 4)
+        val third = getInputText(order - 3)
+        val fourth = getInputText(order - 2)
+        val fifth = getInputText(order - 1)
 
         val answerArray = arrayOf(first, second, third, fourth, fifth)
 
@@ -218,16 +215,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun getInputText(order: Int): CharSequence {
+        return ((binding.gridLayout.gridLayout[order] as TextView).text)
+    }
+
     private fun checkAllCorrect(answerArray: Array<CharSequence>): Boolean {
-        return answerArray.contentEquals(questionWord)
+        return answerArray.contentEquals(viewModel.questionWord)
     }
 
     private fun checkSemiCorrect(answerArray: Array<CharSequence>) {
         for (i in 0..4) {
-            if (answerArray[i] == questionWord[i]) {
+            if (answerArray[i] == viewModel.questionWord[i]) {
                 setGridViewColor(i, green)
                 setKeyboardColor(i, green)
-            } else if (answerArray[i] != questionWord[i] && checkContainLetter(answerArray[i])) {
+            } else if (answerArray[i] != viewModel.questionWord[i] && checkContainLetter(answerArray[i])) {
                 setGridViewColor(i, orange)
                 setKeyboardColor(i, orange)
             } else {
@@ -238,7 +239,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun checkContainLetter(letter: CharSequence): Boolean {
-        return questionWord.contains(letter)
+        return viewModel.questionWord.contains(letter)
     }
 
     private fun setGridViewColor(i: Int, color: Int) {
@@ -254,13 +255,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun showStatisticsDialog() {
         order = -1
 
-        val parsedMeaning = questionMeaning
+        val parsedMeaning = viewModel.questionMeaning
 
         DialogStatistics.Builder(
             context = this,
             sp = sp,
             positiveButtonClickListener = ::setOnPositiveButtonClickListener,
-            word = questionWord.joinToString(),
+            word = viewModel.questionWord.joinToString(),
             meaning = parsedMeaning
         ).build()
             .show()
@@ -277,13 +278,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val totalTry = sp.getInt("totalTry", 0)
         val key = "successAt$successAtRow"
         val successAtRowNum = sp.getInt(key, 0)
-        val successiveSuccessNum = sp.getInt("successiveSuccess", 0)
+        val consecutiveSuccessNum = sp.getInt("consecutiveSuccess", 0)
 
         with(sp.edit()) {
             //총시도
             this.putInt("totalTry", totalTry + 1)
             //현재 연속 성공
-            this.putInt("successiveSuccess", successiveSuccessNum + 1)
+            this.putInt("consecutiveSuccess", consecutiveSuccessNum + 1)
             //몇번째에?
             this.putInt("successAt$successAtRow", successAtRowNum + 1)
             apply()
@@ -292,19 +293,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setFailPreference() {
         val totalTry = sp.getInt("totalTry", 0)
-        val successiveSuccessNum = sp.getInt("successiveSuccess", 0)
-        val successiveSuccessArray = sp.getStringSet("successiveSuccessArray", setOf<String>())
+        val consecutiveSuccessNum = sp.getInt("consecutiveSuccess", 0)
+        val consecutiveSuccessArray = sp.getStringSet("consecutiveSuccessArray", setOf<String>())
 
         with(sp.edit()) {
             this.putInt("totalTry", totalTry + 1)
-            this.putInt("successiveSuccess", 0) //현재 연속 성공 Reset
+            this.putInt("consecutiveSuccess", 0) //현재 연속 성공 Reset
 
-            successiveSuccessArray.isNullOrEmpty().not().let {
+            consecutiveSuccessArray.isNullOrEmpty().not().let {
                 val set = if (it) {
-                    successiveSuccessArray!!.add(successiveSuccessNum.toString())
-                    successiveSuccessArray.toSet()
-                } else setOf(successiveSuccessNum.toString())
-                this.putStringSet("successiveSuccessArray", set)
+                    consecutiveSuccessArray!!.add(consecutiveSuccessNum.toString())
+                    consecutiveSuccessArray.toSet()
+                } else setOf(consecutiveSuccessNum.toString())
+                this.putStringSet("consecutiveSuccessArray", set)
             }
             apply()
         }
@@ -312,7 +313,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        progressDialog.let {
+        viewModel.progressDialog.let {
             if (it.isShowing) it.dismiss()
         }
     }

@@ -6,6 +6,9 @@ import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
 import android.content.SharedPreferences
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
@@ -43,49 +46,44 @@ class DialogStatistics(
 
     private fun setData() {
         val totalTry = sp.getInt("totalTry", 0)
-        val successiveSuccess = sp.getInt("successiveSuccess", 0)
+        val consecutiveSuccess = sp.getInt("consecutiveSuccess", 0)
 
         binding.tvTotalTry.text = totalTry.toString()
         val decimal = if (totalTry != 0) getSuccessNumSum() / totalTry.toDouble() else 0.toDouble()
         val quotient = (decimal * 100).roundToInt()
         binding.tvPercentage.text = "$quotient%"
-        binding.tvCurrentSuccessive.text = successiveSuccess.toString()
-        val set = sp.getStringSet("successiveSuccessArray", setOf())
+        binding.tvCurrentSuccessive.text = consecutiveSuccess.toString()
+        val set = sp.getStringSet("consecutiveSuccessArray", setOf())
         set.isNullOrEmpty().not().let {
             val max = if (it) {
                 val maxSS = set!!.map { it.toInt() }.maxOf { it }
-                maxOf(maxSS, successiveSuccess)
-            } else successiveSuccess
+                maxOf(maxSS, consecutiveSuccess)
+            } else consecutiveSuccess
 
             binding.tvMaxSuccessive.text = max.toString()
         }
 
-        binding.tvOne.text = getSuccessNumAt(1).toString()
-        binding.tvTwo.text = getSuccessNumAt(2).toString()
-        binding.tvThree.text = getSuccessNumAt(3).toString()
-        binding.tvFour.text = getSuccessNumAt(4).toString()
-        binding.tvFive.text = getSuccessNumAt(5).toString()
-        binding.tvSix.text = getSuccessNumAt(6).toString()
+        for (i in 1..6) {
+            binding.root.findViewWithTag<TextView>("tv${i}").text = getSuccessNumAt(i).toString()
+        }
 
         val maxMap = getMaxSuccess()
         val maxValue = maxMap.values.map { it }[0]
 
         if (maxValue == 0) {
-            binding.viewOne.layoutParams.width = 0
-            binding.viewTwo.layoutParams.width = 0
-            binding.viewThree.layoutParams.width = 0
-            binding.viewFour.layoutParams.width = 0
-            binding.viewFive.layoutParams.width = 0
-            binding.viewSix.layoutParams.width = 0
+            for (i in 1..6) {
+                binding.root.findViewWithTag<View>("${i}").layoutParams.width = 0
+            }
         } else {
-            binding.viewOne.layoutParams.width = matchParentWidth * getSuccessNumAt(1) / maxValue
-            binding.viewTwo.layoutParams.width = matchParentWidth * getSuccessNumAt(2) / maxValue
-            binding.viewThree.layoutParams.width = matchParentWidth * getSuccessNumAt(3) / maxValue
-            binding.viewFour.layoutParams.width = matchParentWidth * getSuccessNumAt(4) / maxValue
-            binding.viewFive.layoutParams.width = matchParentWidth * getSuccessNumAt(5) / maxValue
-            binding.viewSix.layoutParams.width = matchParentWidth * getSuccessNumAt(6) / maxValue
+            for (i in 1..6) {
+                val view = binding.root.findViewWithTag<View>("${i}").layoutParams
+                setWidthBySuccess(view, i, maxValue)
+            }
         }
 
+    }
+    private fun setWidthBySuccess(layoutParams: ViewGroup.LayoutParams, successNum: Int, maxValue: Int) {
+        layoutParams.width = matchParentWidth * getSuccessNumAt(successNum) / maxValue
     }
 
     private fun setOnClickListener() {

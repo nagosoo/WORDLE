@@ -160,12 +160,14 @@
                     android:layout_height="wrap_content">
 
                     <View
+                        android:tag="1"
                         android:id="@+id/viewOne"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:background="@drawable/bg_statistics" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:tag="tv1"
                         android:id="@+id/tvOne"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -196,12 +198,14 @@
                     android:layout_height="wrap_content">
 
                     <View
+                        android:tag="2"
                         android:id="@+id/viewTwo"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:background="@drawable/bg_statistics" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:tag="tv2"
                         android:id="@+id/tvTwo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -232,12 +236,14 @@
                     android:layout_height="wrap_content">
 
                     <View
+                        android:tag="3"
                         android:id="@+id/viewThree"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:background="@drawable/bg_statistics" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:tag="tv3"
                         android:id="@+id/tvThree"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -267,12 +273,14 @@
                     android:layout_height="wrap_content">
 
                     <View
+                        android:tag="4"
                         android:id="@+id/viewFour"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:background="@drawable/bg_statistics" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:tag="tv4"
                         android:id="@+id/tvFour"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -303,12 +311,14 @@
                     android:layout_height="wrap_content">
 
                     <View
+                        android:tag="5"
                         android:id="@+id/viewFive"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:background="@drawable/bg_statistics" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:tag="tv5"
                         android:id="@+id/tvFive"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -338,12 +348,14 @@
                     android:layout_height="wrap_content">
 
                     <View
+                        android:tag="6"
                         android:id="@+id/viewSix"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:background="@drawable/bg_statistics" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:tag="tv6"
                         android:id="@+id/tvSix"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
