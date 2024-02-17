@@ -13,9 +13,9 @@
 ```
 ---
 ### 🌈 앱 미리보기
-<img src="https://github.com/nagosoo/WORDLE/assets/82588344/a4e6fc8c-99a7-462b-bc8b-8f76d56dab7d" width="30%" height="20%"  alt="게임방법"></img>
-<img src="https://github.com/nagosoo/WORDLE/assets/82588344/4def669c-f374-469f-bc24-4a52b83422f3" width="30%" height="20%"  alt="게임"></img>
-<img src="https://github.com/nagosoo/WORDLE/assets/82588344/e835a13c-d91c-42b1-8082-1abdb76cbd05" width="30%" height="20%"  alt="게임결과"></img>
+<img src="https://github.com/nagosoo/WORDLE/assets/82588344/a4e6fc8c-99a7-462b-bc8b-8f76d56dab7d" width="20%" height="20%"  alt="게임방법"></img>
+<img src="https://github.com/nagosoo/WORDLE/assets/82588344/4def669c-f374-469f-bc24-4a52b83422f3" width="20%" height="20%"  alt="게임"></img>
+<img src="https://github.com/nagosoo/WORDLE/assets/82588344/e835a13c-d91c-42b1-8082-1abdb76cbd05" width="20%" height="20%"  alt="게임결과"></img>
 
 ---
 ### 🍿 프로젝트 내용 및 맡은 역할
